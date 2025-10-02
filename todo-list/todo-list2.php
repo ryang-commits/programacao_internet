@@ -24,12 +24,18 @@ header("location: todo-list2.php");
 
 # Exclusão de tarefas
 
+if(isset($_GET['delete'])){
+    $id = intval($_GET['delete']);
+    $sqlDelete = "DELETE FROM tarefas WHERE id = $id";
+    if($conn->query($sqlDelete) === TRUE){
+        header("location: todo-list2.php");
+}
+}
+
 
 
 # Listar tarefas
 $tarefas=[]; 
-
-$tarefas=[];
 
 $sqlSelect = "SELECT * FROM tarefas ORDER BY data_criacao DESC";
 $result = $conn->query($sqlSelect);
@@ -60,7 +66,14 @@ $tarefas[]=$row;
 
     <h2>Suas tarefas</h2>
     <?php if(!empty($tarefas)):?>
-    <h3>Minhas tarefas</h3>
+        <ul>
+            <?php foreach($tarefas as $tarefa):?>
+                <li>
+                    <?php echo $tarefa['descricao'] ?>
+                    <a href="todo-list2.php?delete=<?php echo $tarefa['id']?>">Excluir</a>
+                </li>
+            <?php endforeach ?>
+        </ul>
     <?php else:?>
     <h3>Não tem tarefas</h3>
     <?php endif;?>
