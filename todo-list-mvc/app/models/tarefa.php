@@ -7,7 +7,7 @@ class tarefa{
 
     public function __construct() {
         $db = new database();
-        $this ->conn = $db->connect();
+        $this ->conn = $db->conectar();
 }
 
 ## Listar
@@ -15,7 +15,7 @@ class tarefa{
 public function listar() {
     $tarefas = [];
     $sql = "SELECT * FROM tarefas ORDER BY data_criacao DESC";
-    $resultado = this->conn->query($sql);
+    $resultado = $this->conn->query($sql);
 
     if($resultado->num_rows > 0) {
         while($row = $resultado->fetch_assoc()) {
@@ -29,15 +29,15 @@ return $tarefas;
 
 public function criar($descricao) {
     $descricao = $this->conn->real_escape_string($descricao);
-    $sql = "INSERT INTO tarefas (descricao) VALUES (`$descricao`)";
+    $sql = "INSERT INTO tarefas (descricao) VALUES ('$descricao')";
     return $this->conn->query($sql);
 }
 
 ## Excluir
 
-public function escluir($id){
+public function excluir($id){
     $id = intval($id);
-    $sql = "DELETE FROM tarefas WHERE id = $id";
+    $sql = "DELETE FROM tarefas WHERE id=$id";
     return $this->conn->query($sql);
 }
 }

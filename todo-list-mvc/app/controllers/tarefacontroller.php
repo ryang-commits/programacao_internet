@@ -8,6 +8,13 @@ public function __construct() {
     $this->tarefaModel = new tarefa();
 }
 
+## Listar
+
+public function index(){
+    $tarefas = $this->tarefaModel->listar();
+    include __DIR__ ."/../views/listar.php";
+}
+
 ## Criar
 
 public function criar() {
@@ -20,7 +27,7 @@ header("Location: index.php");
 ## Excluir
 
 public function excluir(){
-    if(isset($_GET["DELETE"])){
+    if(isset($_GET["delete"])){
         $this->tarefaModel->excluir($_GET["delete"]);
     }
     header("Location: index.php");
